@@ -21,20 +21,20 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
 import android.support.v4.view.MenuItemCompat;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.MediaRouteActionProvider;
 import android.support.v7.media.MediaRouteSelector;
 import android.support.v7.media.MediaRouter;
 import android.support.v7.media.MediaRouter.RouteInfo;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.actionbarsherlock.app.ActionBar;
+import com.actionbarsherlock.app.SherlockFragmentActivity;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuItem;
 import com.google.android.gms.cast.ApplicationMetadata;
 import com.google.android.gms.cast.Cast;
 import com.google.android.gms.cast.Cast.ApplicationConnectionResult;
@@ -52,7 +52,7 @@ import java.util.ArrayList;
 /**
  * Main activity to send messages to the receiver.
  */
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends SherlockFragmentActivity {
 
     private static final String TAG = MainActivity.class.getSimpleName();
 
@@ -150,14 +150,13 @@ public class MainActivity extends ActionBarActivity {
         teardown();
         super.onDestroy();
     }
-
+    
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
-        getMenuInflater().inflate(R.menu.main, menu);
+        getSupportMenuInflater().inflate(R.menu.main, menu);
         MenuItem mediaRouteMenuItem = menu.findItem(R.id.media_route_menu_item);
-        MediaRouteActionProvider mediaRouteActionProvider = (MediaRouteActionProvider) MenuItemCompat
-                .getActionProvider(mediaRouteMenuItem);
+        MediaRouteActionProvider mediaRouteActionProvider = (MediaRouteActionProvider) mediaRouteMenuItem.getActionProvider();
         // Set the MediaRouteActionProvider selector for device discovery.
         mediaRouteActionProvider.setRouteSelector(mMediaRouteSelector);
         return true;
